@@ -20,7 +20,7 @@ guage/
   CONTRIBUTING.md, SECURITY.md             # process drafts carrying the roadmap rule (1.8)
   LICENSE                                 # existing Apache-2.0 license
   .gitignore                              # local policies, outputs, briefings and secrets stay untracked
-  go.mod                                  # module identity, Go 1.27.3 and BurntSushi/toml v1.6.0 (ADR-004)
+  go.mod                                  # module identity, Go 1.27.4 and BurntSushi/toml v1.6.0 (ADR-004)
   go.sum                                  # checksums for the one approved module
   staticcheck.conf                        # enable all checks
   gauge.example.toml                      # the documented starting point: loads through the strict parser, and `audit` with no policy file names it (3.7)
@@ -47,6 +47,7 @@ guage/
     sanitize/
       {text,domain,markdown}.go            # output and domain handling (2.5, 5.3)
       {sanitize_test,fuzz_test}.go         # injection classes, IDN, fencing; FuzzText and FuzzFenced
+      {zero_width,tag_block,c1}_test.go    # per-rune boundaries of the dropped sets (7.23, 7.24, 7.25)
     policy/
       {config,expectations,accept}.go      # policy declarations, no decoding or acceptance logic
       {decode,validate,roles}.go           # strict loading, rejection kinds, network passphrases and the Appendix A role floors (2.4, 3.4)
@@ -67,6 +68,7 @@ guage/
       {text,json,exit}.go                  # P0 renderers, the fact block ahead of the findings, limits footer and outcome mapping (2.6, 3.7)
       markdown.go                         # P1 output (5.3)
       report_test.go                      # golden files, sanitization, determinism, exit tests and the fact block in both formats
+      {limits,empty,nil_facts}_test.go    # golden-free contracts: limits footer last and a JSON key, the empty report in both formats, nil and empty fact blocks (7.14 to 7.16)
     run/
       {run,check,audit}.go                 # P0 orchestration: passphrase, bounded fetch, identity fetch, role severity, accepts, the fact block and `HasPolicy` (2.8, 3.4, 3.5, 3.7)
       {compare,snapshot,diff}.go           # P1 orchestration (5.1, 5.2)

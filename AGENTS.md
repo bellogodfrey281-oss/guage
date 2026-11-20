@@ -65,7 +65,10 @@ scripts/check_roadmap_touched.sh origin/main                                  [r
 scripts/roadmap_progress.sh --check ROADMAP.md                                [roadmap-check / gate]
 scripts/test_roadmap_gate.sh                                                    [roadmap-check / gate]
 scripts/generate_issues.sh --check          # backlog rows cover every open task      [roadmap-check / gate]
+python3 scripts/sync_readme.py --check-base origin/main   # metrics block is script-owned [roadmap-check / gate]
 ```
+
+Do not edit the `<!-- METRICS:START -->` table in `README.md` or the `site/data/badge-*.json` endpoints by hand. `scripts/sync_readme.py` is the only writer: it derives the test and rule counts from the tree and runs on the default branch, while the gate only checks that a pull request left those files alone. That keeps two branches that each add tests from colliding on the same table row.
 
 Fuzz smoke runs, one target at a time. `-fuzz` cannot take multiple packages, so each target is a separate command; these are not CI jobs and there is no bracketed check behind them.
 
@@ -137,4 +140,5 @@ Take extra care in `internal/source/`, `internal/sep1/`, `internal/policy/`, `in
 - [ ] No hard rule in section 4 broken.
 - [ ] Docs updated where behavior, files or decisions changed.
 - [ ] `ROADMAP.md` updated: tasks, changelog row, progress table, `Last updated`.
+- [ ] `README.md` metrics block and `site/data/badge-*.json` untouched; `scripts/sync_readme.py --check-base origin/main` passes.
 - [ ] PR description lists task IDs and confirms the roadmap update.
